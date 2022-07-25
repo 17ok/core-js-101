@@ -101,7 +101,6 @@ function getArrayOfStrings(arr) {
  *    [ false, 0, NaN, '', undefined ]   => [ ]
  */
 function removeFalsyValues(arr) {
-  // eslint-disable-next-line eqeqeq
   return arr.filter(Boolean);
 }
 
@@ -457,9 +456,7 @@ function getIdentityMatrix(n) {
     const innerArr = new Array(n);
     innerArr.fill(0);
     innerArr[index] = 1;
-    // eslint-disable-next-line no-param-reassign
-    el = innerArr;
-    return el;
+    return innerArr;
   });
 }
 
