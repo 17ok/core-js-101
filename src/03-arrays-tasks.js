@@ -35,8 +35,8 @@ function findElement(arr, value) {
  *    2 => [ 1, 3 ]
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
-function generateOdds(/* len */) {
-  throw new Error('Not implemented');
+function generateOdds(len) {
+  return new Array(len).fill(0).map((elem, index) => 2 * index + 1);
 }
 
 
@@ -427,8 +427,8 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => a.country.localeCompare(b.country) || a.city.localeCompare(b.city));
 }
 
 /**
@@ -522,8 +522,15 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  return array.reduce((acc, elem) => {
+    if (acc.has(keySelector(elem))) {
+      acc.get(keySelector(elem)).push(valueSelector(elem));
+    } else {
+      acc.set(keySelector(elem), [valueSelector(elem)]);
+    }
+    return acc;
+  }, new Map());
 }
 
 
@@ -580,19 +587,17 @@ function getElementByIndexes(arr, indexes) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  /* // eslint-disable-next-line prefer-destructuring
-  const head = arr.length % 2
-    ? arr.slice(0, Math.ceil(arr.length / 2))
-    : arr.slice(0, (arr.length / 2));
-  const tail = arr.slice(Math.ceil(arr.length / 2));
-  const center = arr.length % 2
+function swapHeadAndTail(arr) {
+  const head = arr.slice(0, Math.floor(arr.length / 2));
+  const tail = !(arr.length % 2)
+    ? arr.slice(arr.length / 2)
+    : arr.slice(Math.floor(arr.length / 2) + 1);
+  const center = !(arr.length % 2)
     ? []
     : arr[Math.floor(arr.length / 2)];
 
 
-  return [...tail, center, ...head]; */
-  throw new Error('Not implemented');
+  return !(arr.length % 2) ? [...tail, ...head] : [...tail, center, ...head];
 }
 
 

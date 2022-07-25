@@ -117,34 +117,118 @@ function fromJSON(proto, json) {
  */
 
 const cssSelectorBuilder = {
-  element(/* value */) {
+  element() {
     throw new Error('Not implemented');
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
-  },
-
-  class(/* value */) {
-    throw new Error('Not implemented');
-  },
-
-  attr(/* value */) {
-    throw new Error('Not implemented');
-  },
-
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
-  },
-
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
-  },
-
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
-  },
 };
+/*
+  build: '',
+  count: [],
+  elements: [],
+  ids: [],
+  pseudoElements: [],
+  errors: {
+    inOrder: 'Selector parts should be arranged in the following order:
+    element, id, class, attribute, pseudo-class, pseudo-element',
+    inOccurrence: 'Element, id and pseudo-element
+    should not occur more then one time inside the selector',
+  },
+
+  element(value) {
+    if (!this.count.includes(0)) {
+      this.count.push(0);
+    }
+    if (this.count[0] > this.count[1]) {
+      throw new Error(this.errors.inOrder);
+    }
+    if (this.elements.includes('element')) {
+      throw new Error(this.errors.inOccurrence);
+    } else {
+      this.elements.push('element');
+    }
+    this.build += value;
+    return this.createCssSelector('element');
+  },
+
+  id(value) {
+    if (!this.count.includes(1)) {
+      this.count.push(1);
+    }
+    if (this.count[0] > this.count[1]) {
+      throw new Error(this.errors.inOrder);
+    }
+    if (this.elements.includes('id')) {
+      throw new Error(this.errors.inOccurrence);
+    } else {
+      this.elements.push('id');
+    }
+    this.build += `#${value}`;
+    return this.createCssSelector('id');
+  },
+
+  class(value) {
+    if (!this.count.includes(2)) {
+      this.count.push(2);
+    }
+    if (this.count[0] > this.count[1]) {
+      throw new Error(this.errors.inOrder);
+    }
+    this.build += `.${value}`;
+    return this.createCssSelector();
+  },
+
+  attr(value) {
+    if (!this.count.includes(3)) {
+      this.count.push(3);
+    }
+    if (this.count[0] > this.count[1]) {
+      throw new Error(this.errors.inOrder);
+    }
+    this.build += `[${value}]`;
+    return this.createCssSelector();
+  },
+
+  pseudoClass(value) {
+    if (!this.count.includes(4)) {
+      this.count.push(4);
+    }
+    if (this.count[0] > this.count[1]) {
+      throw new Error(this.errors.inOrder);
+    }
+    if (this.elements.includes('pseudo-element')) {
+      throw new Error(this.errors.inOccurrence);
+    } else {
+      this.elements.push('pseudo-element');
+    }
+    this.build += `:${value}`;
+    return this.createCssSelector();
+  },
+
+  pseudoElement(value) {
+    if (!this.count.includes(5)) {
+      this.count.push(5);
+    }
+    if (this.count[0] > this.count[1]) {
+      throw new Error(this.errors.inOrder);
+    }
+    this.build += `::${value}`;
+    return this.createCssSelector();
+  },
+
+  combine(selector1, combinator, selector2) {
+    this.build = `${selector1.stringify()} ${combinator} ${selector2.stringify()}`;
+    return this.createCssSelector();
+  },
+  stringify() {
+    return this.build;
+  },
+  createCssSelector() {
+    const css = { ...this };
+    this.build = '';
+    return css;
+  },
+}; */
 
 
 module.exports = {

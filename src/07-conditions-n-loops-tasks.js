@@ -128,18 +128,8 @@ function isTriangle(a, b, c) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
-  /* const rect1TopL = rect1.top;
-  const rect1BottomL = rect1.top + rect1.height;
-  const rect1TopR = rect1.left;
-  // const rect1BottomR = rect1.left + rect1.width;
-
-  const rect2TopL = rect2.top;
-  const rect2BottomL = rect2.top + rect2.height;
-  // const rect2TopR = rect2.left;
-  const rect2BottomR = rect2.left + rect2.width;
- */
+function doRectanglesOverlap(rect1, rect2) {
+  return !(rect2.top > rect1.height || rect2.left > rect1.width);
 }
 
 
@@ -222,8 +212,11 @@ function findFirstSingleChar(str) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  const start = isStartIncluded ? '[' : '(';
+  const end = isEndIncluded ? ']' : ')';
+  // eslint-disable-next-line no-sequences
+  return `${start}${a > b ? `${b}, ${a}` : `${a}, ${b}`}${end}`;
 }
 
 
